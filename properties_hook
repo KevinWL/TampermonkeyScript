@@ -1,0 +1,36 @@
+// ==UserScript==
+// @name         properties_hook
+// @namespace    http://tampermonkey.net/
+// @version      2024-07-25
+// @description  Override browser properties.
+// @author       KevinWang
+// @match        http*://*/*
+// @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+// @grant        none
+// @run-at       document-start
+// ==/UserScript==
+
+(function() {
+    "use strict";
+    const propertiesToOverride = [
+        { object: window, property: 'innerWidth', value: 0 },
+        { object: window, property: 'innerHeight', value: 0 },
+        { object: window, property: 'outerWidth', value: 0 },
+        { object: window, property: 'outerHeight', value: 0 },
+        { object: window, property: 'screenX', value: 0 },
+        { object: screen, property: 'width', value: 0 },
+        { object: screen, property: 'height', value: 0 },
+        { object: screen, property: 'availWidth', value: 0 },
+        { object: screen, property: 'availHeight', value: 0 }
+    ];
+
+    propertiesToOverride.forEach(({ object, property, value }) => {
+        Object.defineProperty(object, property, {
+            get: function() {
+                return value;
+            },
+            configurable: false // 防止再次配置
+        });
+    });
+
+})();
