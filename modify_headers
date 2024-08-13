@@ -1,0 +1,87 @@
+// ==UserScript==
+// @name         Modify Request Headers
+// @namespace    http://tampermonkey.net/
+// @version      1.0
+// @description  Modify Request Headers
+// @author       KevinWang
+// @match        *://*/*
+// @grant        none
+// @run-at       document-start
+// ==/UserScript==
+(function() {
+    'use strict';
+
+    // 定义要修改和删除的请求头
+    const headerToOverride = [
+        { type: 'Update', key: 'X-Custom-Header', value:'MyCustomValue' }, // Modify or Add
+        { type: 'Delete', key: 'Sec-Fetch-Dest' }, // Delete
+    ];
+
+    // 拦截并修改 XMLHttpRequest 请求
+    const originalOpen = XMLHttpRequest.prototype.open;
+    XMLHttpRequest.prototype.open = function() {
+        this._customHeaders = {}; // 用来存储设置的请求头
+
+        // 保存原始的 setRequestHeader 方法
+        const originalSetRequestHeader = this.setRequestHeader;
+        this.setRequestHeader = function(header, value) {
+            this._customHeaders[header] = value; // 保存请求头
+            originalSetRequestHeader.call(this, header, value);
+        };
+
+        // 保存原始的 send 方法
+        const originalSend = this.send;
+        this.send = function() {
+            headerToOverride.forEach(({type, key, value}) => {
+                if (type === 'Delete' && this._customHeaders[key]) {
+                    delete this._customHeaders[key];
+                    console.log(`Deleting header: ${key}`);
+                } else if (type === 'Update') {
+                    this._customHeaders[key] = value;
+                    console.log(`Setting header: ${key} = ${value}`);
+                }
+            });
+
+            // 重新设置所有的请求头
+            for (const header in this._customHeaders) {
+                originalSetRequestHeader.call(this, header, this._customHeaders[header]);
+            }
+
+            return originalSend.apply(this, arguments);
+        };
+
+        return originalOpen.apply(this, arguments);
+    };
+
+    // 拦截并修改 Fetch 请求
+    const originalFetch = window.fetch;
+    window.fetch = function(input, init) {
+        init = init || {};
+        init.headers = init.headers || {};
+
+        if (init.headers instanceof Headers) {
+            headerToOverride.forEach(({type, key, value}) => {
+                if (type === 'Delete' && init.headers.has(key)) {
+                    init.headers.delete(key);
+                    console.log(`Deleting header: ${key}`);
+                } else if (type === 'Update') {
+                    init.headers.set(key, value);
+                    console.log(`Setting header: ${key} = ${value}`);
+                }
+            });
+        } else if (typeof init.headers === 'object') {
+            headerToOverride.forEach(({type, key, value}) => {
+                if (type === 'Delete' && key in init.headers) {
+                    delete init.headers[key];
+                    console.log(`Deleting header: ${key}`);
+                } else if (type === 'Update') {
+                    init.headers[key] = value;
+                    console.log(`Setting header: ${key} = ${value}`);
+                }
+            });
+        }
+
+        return originalFetch(input, init);
+    };
+
+})();
