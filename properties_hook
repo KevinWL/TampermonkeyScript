@@ -19,7 +19,45 @@
             filename: 'pepflashplayer.dll'
         }
     ];
+    const customMimeTypes = [
+        {
+            MimeType: 'application/futuresplash',
+            Exentions: 'sql',
+            description: 'futuresPlash Player',
+            Plugin: 'Shockwave Flash'
+        }
+    ];
     const propertiesToOverride = [
+        { object: navigator, property: 'webdriver', value: true },
+        { object: navigator, property: 'platform', value: 'Mac_OS_X '},
+        { object: navigator, property: 'mimeTypes', value: customMimeTypes },
+        { object: navigator, property: 'scheduling', value: false },
+        { object: navigator, property: 'userActivation', value: false },
+        { object: navigator, property: 'geolocation', value: false },
+        { object: navigator, property: 'connection', value: false },
+        { object: navigator, property: 'webkitTemporaryStorage', value: false },
+        { object: navigator, property: 'webkitPersistentStorage', value: false },
+        { object: navigator, property: 'windowControlsOverlay', value: false },
+        { object: navigator, property: 'bluetooth', value: false },
+        { object: navigator, property: 'storageBuckets', value: false },
+        { object: navigator, property: 'clipboard', value: false },
+        { object: navigator, property: 'credentials', value: false },
+        { object: navigator, property: 'keyboard', value: false },
+        { object: navigator, property: 'managed', value: false },
+        { object: navigator, property: 'mediaDevices', value: false },
+        { object: navigator, property: 'storage', value: false },
+        { object: navigator, property: 'serviceWorker', value: false },
+        { object: navigator, property: 'wakeLock', value: false },
+        { object: navigator, property: 'userAgentData', value: false },
+        { object: navigator, property: 'login', value: false },
+        { object: navigator, property: 'mediaCapabilities', value: false },
+        { object: navigator, property: 'hid', value: false },
+        { object: navigator, property: 'locks', value: false },
+        { object: navigator, property: 'gpu', value: false },
+        { object: navigator, property: 'permissions', value: false },
+        { object: navigator, property: 'presentation', value: false },
+        { object: navigator, property: 'usb', value: false },
+        { object: navigator, property: 'xr', value: false },
         { object: window, property: 'innerWidth', value: 1280 },
         { object: window, property: 'innerHeight', value: 720 },
         { object: window, property: 'outerWidth', value: 1280 },
