@@ -12,16 +12,103 @@
 
 (function() {
     "use strict";
+   const customPlugins = [
+        {
+            name: 'Shockwave Flash',
+            description: 'This is a custom plugin 1',
+            filename: 'pepflashplayer.dll'
+        }
+    ];
     const propertiesToOverride = [
-        { object: window, property: 'innerWidth', value: 0 },
-        { object: window, property: 'innerHeight', value: 0 },
-        { object: window, property: 'outerWidth', value: 0 },
-        { object: window, property: 'outerHeight', value: 0 },
-        { object: window, property: 'screenX', value: 0 },
-        { object: screen, property: 'width', value: 0 },
-        { object: screen, property: 'height', value: 0 },
-        { object: screen, property: 'availWidth', value: 0 },
-        { object: screen, property: 'availHeight', value: 0 }
+        { object: window, property: 'innerWidth', value: 1280 },
+        { object: window, property: 'innerHeight', value: 720 },
+        { object: window, property: 'outerWidth', value: 1280 },
+        { object: window, property: 'outerHeight', value: 720 },
+//         //{ object: window, property: 'screenX', value: 0 },
+        { object: screen, property: 'width', value: 1280 },
+        { object: screen, property: 'height', value: 720 },
+        { object: screen, property: 'availWidth', value: 1280 },
+        { object: screen, property: 'availHeight', value: 720 },
+//         { object: screen, property: 'colorDepth', value: 0 },
+//         { object: screen, property: 'pixelDepth', value: 0 },
+//         { object: screen, property: 'top', value: -1000},
+//         { object: screen, property: 'availTop', value: -1000 },
+//         { object: screen, property: 'availLeft', value: -1000 },
+//         { object: window, property: 'devicePixelRatio', value: 0 },
+//         { object: navigator, property: 'hardwareConcurrency', value: 1},
+//         { object: navigator, property: 'deviceMemory', value: 1},
+//         { object: window, property: 'screenY', value: -1000},
+//         { object: window, property: 'screenTop', value: -1000},
+//         { object: window, property: 'screenX', value: -1000},
+//         { object: window, property: 'screenLeft', value: -1000},
+//         { object: document, property: 'baseURI', value: "http://docs.pyspider.org/" },
+//         { object: document, property: 'URL', value: "http://docs.pyspider.org/" },
+//         { object: document, property: 'documentURI', value: "http://docs.pyspider.org/"},
+//         { object: document, property: 'referrer', value: "http://docs.pyspider.org/"},
+//         { object: window, property: 'isSecureContext', value: false }, //设置不在安全上下文环境
+//         { object: window, property: 'originAgentCluster', value: true },//设置在独立代理集群中运行
+//         { object: window, property: 'offscreenBuffering', value: false },//设置启用不启用屏幕外缓冲
+//         { object: navigator, property: 'pdfViewerEnabled', value: false },//设置不启用内置的pdf查看器
+//         { object: navigator, property: 'cookieEnabled', value: true },//设置浏览器不启用cookie
+//         { object: navigator, property: 'onLine', value: false },//设置浏览器处于非在线状态
+//         { object: document, property: 'hidden', value: true },//设置页面在不可见的窗口中
+//         { object: document, property: 'webkitHidden', value: true },//设置页面在不可见的窗口中
+//         { object: document, property: 'fullscreenEnabled', value: false },//设置浏览器是否允许全屏模式
+//         { object: document, property: 'webkitFullscreenEnabled', value: false },//设置浏览器是否允许全屏模式
+//         { object: document, property: 'pictureInPictureEnabled', value: false },//设置浏览器不允许画中画模式
+//         { object: navigator, property: 'vendor', value: "pyspider"}, //设置浏览器厂商名
+//         { object: navigator, property: 'appCodeName', value: "pyspider"},//设置浏览器代码名
+//         { object: navigator, property: 'appName', value: "pyspider"},//设置浏览器名称
+//         { object: navigator, property: 'appVersion', value: "5.0 (Linux)" },//设置浏览器版本
+//         { object: navigator, property: 'platform', value: "Linux"},//设置浏览器的操作系统平台
+//         { object: navigator, property: 'product', value: "jammy"},//设置浏览器的产品名称
+//         { object: navigator, property: 'userAgent', value: "HeadlessChrome/pyspider/0.3.10 (+http://pyspider.org/)"},//设置浏览器信息的用户代理
+//         { object: navigator, property: 'language', value: ""},//设置首选语言
+//         { object: navigator, property: 'languages', value: "" },//设置首选语言列表
+//         { object: document, property: 'compatMode', value: ""}, //设置文档的渲染模式
+//         { object: document, property: 'characterSet', value: ""},//设置文档的字符集编码
+//         { object: document, property: 'charset', value: ""},//设置文档的字符集编码
+//         { object: document, property: 'inputEncoding', value: ""},//设置文档的输入编码
+//         { object: document, property: 'contentType', value: "application/octet-stream"},//设置文档的 MIME 类型
+//         { object: document, property: 'domain', value: ""},//设置当前文档域名
+//         { object: document, property: 'cookie', value: ""},//设置当前文档的cookie
+//         { object: document, property: 'lastModified', value: ""},//设置文档的最后修改时间
+//         { object: document, property: 'readyState', value: "complete"},//设置文档的加载状态
+//         { object: document, property: 'designMode', value: "on" },//设置文档可编辑
+//         { object: document, property: 'visibilityState', value: "invisible"},//设置文档的可见性状态不可见
+//         { object: document, property: 'webkitVisibilityState', value: "invisible" },//设置文档的可见性状态不可见
+//         { object: window, property: 'length', value: 10}, //设置框架的数量
+//         { object: window, property: 'scrollX', value: 10000},//设置水平滚动偏移量
+//         { object: window, property: 'pageXOffset', value:10000},//设置水平滚动偏移量
+//         { object: window, property: 'scrollY', value: 10000},//设置垂直滚动偏移量
+//         { object: window, property: 'pageYOffset', value: 10000},//设置垂直滚动偏移量
+//         { object: window, property: 'TEMPORARY', value: 1},//设置临时存储类型
+//         { object: navigator, property: 'maxTouchPoints', value:10},//设置备支持的最大触控点数
+//         { object: window, property: 'outerHeight', value: 0 },//设置浏览器窗口的高度
+//         { object: window, property: 'closed', value: true}, //设置前窗口已关闭
+//         { object: window, property: 'crossOriginIsolated', value: true},//设置当前上下文处于跨源隔离模式
+//         { object: window, property: 'credentialless', value: true},//设置请求是与凭证无关
+//         { object: navigator, property: 'webdriver', value: true},//设置是否由自动化工具控制
+//         { object: document, property: 'xmlStandalone', value:true},//设置XML 文档是独立的
+//         { object: document, property: 'wasDiscarded', value: true},//设置文档是由于内存压力被丢弃过
+//         { obect: document, property: 'prerendering', value: true},//设置文档是正在被预渲染
+//         { object: document, property: 'fullscreen', value: true},//设置文档是处于全屏模式
+//         { object: document, property: 'webkitIsFullScreen', value: true},//设置文档在 WebKit 中是处于全屏模式
+//         { object:navigator, property: 'scheduling', value: ''}, //设置定时器和任务调度相关
+//         { object: navigator, property: 'userActivation', value: ''},//设置用户激活（如点击或键盘输入）状态的信息
+//         { object: navigator, property: 'geolocation', value: ''},//设置网页获取用户的位置
+//         { object: navigator, property: 'connection', value: ''},//设置网络连接类型和带宽
+//         { object: navigator, property: 'plugins', value:customPlugins },//设置浏览器中安装的插件的列表
+//         { object: navigator, property: 'mimeTypes', value: ''},//设置浏览器支持的 MIME 类型的信息
+//         { object: navigator, property: 'webkitTemporaryStorage', value: ''},//设置对 WebKit 临时存储的访问
+//         { object: navigator, property: 'webkitPersistentStorage', value: ''},//设置对 WebKit 持久存储的访问
+//         { object: navigator, property: 'windowControlsOverlay', value:''},//设置有关窗口控制覆盖的信息
+//         { object: navigator, property: 'bluetooth', value: '' },//设置网页与附近的蓝牙设备通信
+//         { object: navigator, property: 'storageBuckets', value: ''},//设置对存储桶的访问
+//         { object: navigator, property: 'clipboard', value: ''},//设置网页读写剪贴板内容
+//         { object: navigator, property: 'credentials', value:''},//设置网页管理用户的凭据
+//         { object: navigator, property: 'keyboard', value: '' },//设置键盘相关 API 的访问
+//         { object: navigator, property: 'managed', value: ''}//设置管理配置的访问
     ];
 
     propertiesToOverride.forEach(({ object, property, value }) => {
